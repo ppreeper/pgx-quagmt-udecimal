@@ -24,28 +24,29 @@ jobs:
         ports:
           - 5432:5432
         options: >-
-          --health-cmd "pg_isready -U postgres"
+          --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
 
+    env:
+      PGX_TEST_DATABASE: postgres://postgres:postgres@localhost:5432/testdb
+
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
       - name: Set up Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@v5
         with:
-          go-version: 1.25
+          go-version-file: go.mod
           cache: true
 
       - name: Test (with coverage)
-        env:
-          PGX_TEST_DATABASE: postgres://postgres:postgres@localhost:5432/testdb
         run: |
           go test -race -coverprofile=coverage.out -covermode=atomic ./...
 
       - name: Show coverage
-        run: go tool cover -func=coverage
+        run: go tool cover -func=coverage.out
 
       - name: Generate coverage badge
         run: |

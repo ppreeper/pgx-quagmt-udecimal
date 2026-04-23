@@ -3,6 +3,7 @@ package decimal_test
 import (
 	"context"
 	"math"
+	"os"
 	"testing"
 
 	pgxdecimal "github.com/ppreeper/pgx-quagmt-udecimal"
@@ -16,6 +17,13 @@ var defaultConnTestRunner pgxtest.ConnTestRunner
 
 func init() {
 	defaultConnTestRunner = pgxtest.DefaultConnTestRunner()
+	defaultConnTestRunner.CreateConfig = func(ctx context.Context, t testing.TB) *pgx.ConnConfig {
+		config, err := pgx.ParseConfig(os.Getenv("PGX_TEST_DATABASE"))
+		if err != nil {
+			t.Fatalf("ParseConfig failed: %v", err)
+		}
+		return config
+	}
 	defaultConnTestRunner.AfterConnect = func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
 		pgxdecimal.Register(conn.TypeMap())
 	}
