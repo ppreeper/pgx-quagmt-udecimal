@@ -67,7 +67,7 @@ func TestNaN(t *testing.T) {
 	defaultConnTestRunner.RunTest(context.Background(), t, func(ctx context.Context, t testing.TB, conn *pgx.Conn) {
 		var d udecimal.Decimal
 		err := conn.QueryRow(context.Background(), `select 'NaN'::numeric`).Scan(&d)
-		require.EqualError(t, err, `can't scan into dest[0]: cannot scan NaN into *udecimal.Decimal`)
+		require.EqualError(t, err, `can't scan into dest[0] (col: numeric): invalid format: can't parse 'NaN'`)
 	})
 }
 
