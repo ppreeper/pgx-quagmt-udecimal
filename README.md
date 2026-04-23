@@ -1,7 +1,7 @@
 # pgx-quagmt-udecimal
 
 [![Test](https://github.com/ppreeper/pgx-quagmt-udecimal/actions/workflows/test.yml/badge.svg)](https://github.com/ppreeper/pgx-quagmt-udecimal/actions/workflows/test.yml)
-![Coverage](https://raw.githubusercontent.com/ppreeper/pgx-quagmt-udecimal/main/.github/badges/coverage.svg)
+![Coverage](.github/badges/coverage.svg)
 
 PostgreSQL `numeric`, `float8`, and `int8` type support for [jackc/pgx/v5](https://github.com/jackc/pgx) using [quagmt/udecimal](https://github.com/quagmt/udecimal).
 
